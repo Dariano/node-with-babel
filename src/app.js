@@ -1,17 +1,10 @@
 import express from 'express'
 import bodyParser from 'body-parser'
+import routes from './routes'
 
 const app = express()
 app.use(bodyParser.json())
 
-app.get('/', (req, res) => res.send('Olá pessoal!!!!'))
-
-app.get('/produtos', (req, res) => {
-    res.json([{
-        nome: 'Produto padrão',
-        descricao: 'Descrição do produto',
-        preco: 100
-    }])
-})
+app.use('/', routes)
 
 export default app

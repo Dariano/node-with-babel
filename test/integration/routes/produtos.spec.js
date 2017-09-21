@@ -10,9 +10,11 @@ describe('Routes: Produtos', () => {
             request
                 .get('/produtos')
                 .end((err, res) => {
+                    expect(res.statusCode).to.be.eql(200)
+                    expect(res.body).to.be.an('array')
                     expect(res.body[0]).to.eql(produtoPadrao)
 
-                    done()
+                    done(err)
                 })         
         });
     });
