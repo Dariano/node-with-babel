@@ -5,12 +5,12 @@ describe('Routes: Produtos', () => {
         preco: 100
     }
     
-    describe('GET /protudos', () => {
+    describe('GET /produtos', () => {
         it('deve retornar uma lista de produtos', done => {
             request
-                .get('/protudos')
+                .get('/produtos')
                 .end((err, res) => {
-                    expect(res.body[0]).to.be.eql(produtoPadrao)
+                    expect(res.body[0]).to.eql(produtoPadrao)
 
                     done()
                 })         
