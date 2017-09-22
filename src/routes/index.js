@@ -1,5 +1,5 @@
 import express from 'express'
-import produtosRoute from './protudos'
+import produtosRoute from './produtos'
 
 const router = express.Router()
 
