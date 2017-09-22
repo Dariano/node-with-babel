@@ -1,7 +1,7 @@
 import suportest from 'supertest'
 import chai from 'chai'
-import app from '../../src/app'
+import setupApp from '../../src/app'
 
-global.app = app
-global.request = suportest(app)
+global.setupApp = setupApp
+global.supertest = suportest
 global.expect = chai.expect

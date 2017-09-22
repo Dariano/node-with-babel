@@ -4,7 +4,16 @@ describe('Routes: Produtos', () => {
         descricao: 'Descrição do produto',
         preco: 100
     }
-    
+
+    let request;
+
+    before(() => {
+        return setupApp
+            .then(app => {
+                request = supertest(app)
+            })
+    })
+
     describe('GET /produtos', () => {
         it('deve retornar uma lista de produtos', done => {
             request
@@ -15,7 +24,7 @@ describe('Routes: Produtos', () => {
                     expect(res.body[0]).to.eql(produtoPadrao)
 
                     done(err)
-                })         
-        });
-    });
-});
+                })
+        })
+    })
+})
