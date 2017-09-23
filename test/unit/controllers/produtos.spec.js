@@ -1,5 +1,6 @@
 import ProdutosController from '../../../src/controllers/produtos'
 import sinon from 'sinon'
+import Produto from '../../../src/models/produtos'
 
 describe('Controllers: Produtos', () => {
     const produtoPadrao = [{
@@ -15,10 +16,34 @@ describe('Controllers: Produtos', () => {
                 json: sinon.spy()
             }
 
-            ProdutosController.buscar(request, response)
+            Produto.find = sinon.stub()
 
-            expect(response.json.called, 'Chamar json()').to.be.true
-            expect(response.json.calledWith(produtoPadrao), 'Passa produto padrão').to.be.true
-        });
-    });
-});
+            Produto.find.withArgs({}).resolves(produtoPadrao)
+            const produtosController = new ProdutosController(Produto)
+
+            return produtosController.buscar(request, response)
+                .then(() => {
+                    sinon.assert.calledWith(response.json, produtoPadrao)
+                })
+        })
+
+        it('deve retornar 400 quando um erro ocorrer', () => {
+            const request = {}
+            const response = {
+                json: sinon.spy(),
+                status: sinon.stub()
+            }
+
+            response.status.withArgs(400).returns(response)
+            Produto.find = sinon.stub()
+            Produto.find.withArgs({}).rejects({ message: 'Erro!!!' })
+
+            const produtosController = new ProdutosController(Produto)
+
+            return produtosController.buscar(request, response)
+                .then(() => {
+                    sinon.assert.calledWith(response.json, 'Erro!!!')
+                })
+        })
+    })
+})

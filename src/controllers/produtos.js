@@ -1,11 +1,13 @@
 class ProdutosController {
+    constructor(produto){
+        this.produto = produto;
+    }
+
     buscar(req, res) {
-        res.json([{
-            nome: 'Produto padrão',
-            descricao: 'Descrição do produto',
-            preco: 100
-        }])
+        return this.produto.find({})
+            .then(produtos => res.json(produtos))
+            .catch(erro => res.status(400).json(erro.message))
     }
 }
 
-export default new ProdutosController()
+export default ProdutosController
